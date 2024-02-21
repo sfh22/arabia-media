@@ -101,21 +101,10 @@ def main():
 
         st.markdown("### Download Transformed Data")
 
-        # Create a link for downloading the transformed data
-        transformed_data_link = get_transformed_data_link(transformed_df)
-        
-        # Display download link
-        st.markdown(transformed_data_link, unsafe_allow_html=True)
-
-def get_transformed_data_link(df):
-    # Save the transformed data to a BytesIO buffer
-    buffer = BytesIO()
-    df.to_excel(buffer, index=False, engine='xlsxwriter')
-    
-    # Create a download link
-    download_link = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64encode(buffer.getvalue()).decode()}" download="transformed_data.xlsx">Click here to download the transformed data</a>'
-    
-    return download_link
+        # Provide a download button for the processed data
+        csv_data = transformed_df.to_csv(index=False).encode('utf-8')
+        st.download_button('Download Transformed Data', data=csv_data, mime='text/csv',
+                           key='transformed_data', help="Click to download the transformed data")
 
 if __name__ == "__main__":
     main()
