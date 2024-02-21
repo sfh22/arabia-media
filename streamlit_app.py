@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+from io import BytesIO
+from base64 import b64encode
 
 def transform_data(df):
     df1 = df.copy()
