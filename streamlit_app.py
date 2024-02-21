@@ -98,7 +98,7 @@ def main():
         st.write(transformed_df)
 
         st.markdown("### Download Transformed Data")
-        
+
         # Create a link for downloading the transformed data
         transformed_data_link = get_transformed_data_link(transformed_df)
         
@@ -106,12 +106,12 @@ def main():
         st.markdown(transformed_data_link, unsafe_allow_html=True)
 
 def get_transformed_data_link(df):
-    # Save the transformed data to a temporary file
-    temp_file_path = "/tmp/transformed_data.xlsx"
-    df.to_excel(temp_file_path, index=False, engine='xlsxwriter')
+    # Save the transformed data to a BytesIO buffer
+    buffer = BytesIO()
+    df.to_excel(buffer, index=False, engine='xlsxwriter')
     
-    # Generate a download link
-    download_link = f'<a href="/download?file_path={temp_file_path}" download="transformed_data.xlsx">Click here to download the transformed data</a>'
+    # Create a download link
+    download_link = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64encode(buffer.getvalue()).decode()}" download="transformed_data.xlsx">Click here to download the transformed data</a>'
     
     return download_link
 
