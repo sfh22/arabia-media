@@ -83,7 +83,7 @@ def transform_data(df):
     return df_new
 
 def main():
-    st.title("Data Transformation App")
+    st.title("Arabia Data Processing App")
 
     # Upload file
     uploaded_file = st.file_uploader("Upload Excel File", type=["xlsx"])
@@ -92,19 +92,13 @@ def main():
         # Read data from uploaded file
         df = pd.read_excel(uploaded_file, skiprows=7)
 
-        st.write("### Original Data:")
-        st.write(df)
-
-        st.write("### Transformed Data:")
         transformed_df = transform_data(df)
-        st.write(transformed_df)
 
-        st.markdown("### Download Transformed Data")
+        st.markdown("### Download Processed Data")
 
         # Provide a download button for the processed data
         csv_data = transformed_df.to_csv(index=False).encode('utf-8')
-        st.download_button('Download Transformed Data', data=csv_data, mime='text/csv',
-                           key='transformed_data', help="Click to download the transformed data")
+        st.download_button('Download File', data=csv_data, mime='text/csv')
 
 if __name__ == "__main__":
     main()
